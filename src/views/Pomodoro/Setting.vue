@@ -15,7 +15,7 @@
     </el-row>
 </div>
 </template>
-<style lang="scss" scope>
+<style lang="scss">
 .todoTitle {
     font-size: 24px;
     font-family: 'Roboto', sans-serif;

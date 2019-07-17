@@ -9,7 +9,7 @@
                     </el-col>
                     <el-col :span="21" class="doing" v-text="firstTodo"></el-col>
                 </el-row>
-                <div class="time">25:00</div>
+                <div class="time">{{ min }}:{{ second }}</div>
                 <div class="list">
                     <div v-for="(task, index) in lineUpTasks" :key="index">
                         <el-row>
@@ -22,6 +22,9 @@
                         <hr>    
                     </div>
                 </div>
+                <el-row v-if="tasks.length > 3" type="flex" justify="end">
+                    <router-link :to="{ name: 'pomo-todolist'}" class="more">MORE</router-link>
+                </el-row>
             </el-col>
         </el-col>
         <el-col :span="8" class="right">
@@ -50,28 +53,21 @@
             </div>
             <p class="pomodoro">POMODORO</p>
         </el-col>
-        <div class="circle-location">
-            <div class="countdowncircleborder">
-                <div class="countdowncircle">
-                    <div class="play-background" v-if="ready" @click="play()">
-                        <i class="el-icon-caret-right" style="font-size:96px; color:#FF4384"></i>
-                    </div>
-                    <i class="el-icon-video-pause" style="font-size:96px; color:white" v-else @click="play()"></i>
-                </div>
-            </div>
-        </div>
+        <countdown-circle :stop="stop" @toggle="toggle"></countdown-circle>
     </el-row>
 </template>
 <style lang="scss" scope>
 .left {
     background-color: #FFEDF7;
     height: 100vh;
+    min-height: 750px;
     padding: 48px;
 }
 
 .right {
     background-color: #003164;
     height: 100vh;
+    min-height: 750px;
     padding: 48px;
 }
 
@@ -108,36 +104,6 @@
     border-radius: 50%;
 }
 
-.circle-location {
-    position: absolute;
-    width: 600px;
-    left: 660px;
-    top:100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.countdowncircleborder{
-    width: 540px;
-    height: 540px;
-    border: 2px solid #FF4384;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-    
-.countdowncircle{
-    width: 500px;
-    height: 500px;
-    border-radius: 50%;
-    background-color: #FF4384;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .setting-row {
     margin-bottom:48px;
 }
@@ -147,11 +113,10 @@
     color: #FFFFFF;
 }
 
-.play-background {
-    width: 96;
-    height: 96px;
-    background-color: #FFFFFF;
-    border-radius: 50%;
+.more {
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    color: #FF4384;
 }
 
 .pomodoro {
@@ -167,14 +132,18 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import CountdownCircle from '../../components/Pomodoro/CountdownCircle.vue';
 
 export default Vue.extend({
     name: 'Pomodora',
+    components: {CountdownCircle},
     data() {
         return {
-            input: '',
-            tasks: [''],
-            ready: true,
+            input: '' as string,
+            tasks: [''] as [string],
+            stop: true as boolean,
+            workTimeRemining: 1500 as number,
+            interval: 0 as number,
         };
     },
     mounted() {
@@ -183,27 +152,52 @@ export default Vue.extend({
         }
     },
     computed: {
-        lineUpTasks() {
+        lineUpTasks(): [] | undefined {
             if (this.tasks.length > 0) {
                 const originalTasks = JSON.parse(JSON.stringify(this.tasks));
-                originalTasks.shift();
-                return originalTasks;
+                return originalTasks.slice(1, 4);
             }
         },
-        firstTodo() {
+        firstTodo(): string | undefined {
             if (this.tasks.length > 0) {
-                const originalTasks = JSON.parse(JSON.stringify(this.tasks));
-                return originalTasks.shift();
+                return (JSON.parse(JSON.stringify(this.tasks))).shift();
             }
+        },
+        min(): string {
+            const min = Math.floor((this.workTimeRemining * 1000) / (1000 * 60));
+            return this.addZeroAndToString(min);
+        },
+        second(): string {
+            const sec = Math.floor((this.workTimeRemining * 1000 % (1000 * 60)) / 1000);
+            return this.addZeroAndToString(sec);
         },
     },
     methods: {
-        add(val: string) {
+        add(val: string): void {
             this.tasks.push(val);
             localStorage.setItem('tasks', JSON.stringify(this.tasks));
         },
-        play() {
-            this.ready = ! this.ready;
+        toggle(stop: boolean): void {
+            this.stop = stop;
+            if (this.stop === false) {
+                this.interval = this.countDown();
+            }
+            if (this.stop === true) {
+                clearInterval(this.interval);
+            }
+        },
+        countDown(): number {
+            return setInterval(() => {
+                if (this.stop === false) {
+                    this.workTimeRemining -- ;
+                }
+            }, 1000);
+        },
+        addZeroAndToString(num: number): string {
+            if (num > 10) {
+                return num.toString();
+            }
+            return '0' + num.toString();
         },
     },
 });
