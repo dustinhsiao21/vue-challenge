@@ -5,7 +5,7 @@ export default {
     extends: Bar,
     props: {
         chartdata : Object,
-        option: Object,
+        options: Object,
     },
     mounted() {
         this.renderChart(this.chartdata, this.options);

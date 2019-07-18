@@ -31,7 +31,7 @@
     </el-row>
     <el-row>
         <el-col>
-            <div class="mt-10" style="height:50px;">
+            <div class="mt-10 h-50">
                 <bar-chart :chartdata="input" :options="options" :styles="style"></bar-chart>
             </div>
         </el-col>
@@ -44,6 +44,11 @@
 .mt-10 {
     margin-top: 10px;
 }
+
+.h-50 {
+    height: 50px;
+}
+
 .mt-46 {
     margin-top: 46px;
 }
@@ -65,7 +70,7 @@
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
     font-size: 16px;
-    color: $blue;
+    color: $blue-dark;
     margin-left: 5px;
 }
 
@@ -101,11 +106,11 @@ export default Vue.extend({
                 },
                 scales: {
                     xAxes: [{
+                        barPercentage: 0.5,
                         gridLines: {
                             color: '#FFFFFF',
                             display: false,
                         },
-                        barPercentage: 0.5,
                         ticks: {
                             fontColor: '#FFFFFF',
                         },

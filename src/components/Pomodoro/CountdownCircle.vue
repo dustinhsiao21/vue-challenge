@@ -1,13 +1,26 @@
 <template>
 <div class="circle-location">
-    <div class="countdowncircleborder">
-        <div class="countdowncircle" :class=" stop ? 'background-red': 'background-white'"> 
-            <div class="play-background" v-show="stop" :class=" stop ? 'background-white': 'background-red'">
-                <i class="el-icon-caret-right icon-style"></i>
+    <div class="countdowncircleborder" :class="isBreak ? 'border-color-blue' : 'border-color-red'">
+        <div class="countdowncircle" 
+            :class=" circleStyle"> 
+            <div 
+            class="play-background" 
+            v-show="stop" 
+            :class=" stop ? 'bg-white': 'bg-' + defaultColor"
+            >
+                <i class="el-icon-caret-right icon-style" 
+                :class="stop ? 'color-' + defaultColor : 'color-white'"></i>
             </div>
-            <i class="el-icon-video-pause icon-style" v-show="!stop"></i>
-            <svg :class="stop ? 'paused' : ''"  @click="toggle()">
-                <circle r="260" cx="272" cy="274" :style=" stop ? 'animation-play-state: paused':''"></circle>
+            <i class="el-icon-video-pause icon-style"
+            :class="stop ? 'color-white' : 'color-'+ defaultColor " 
+            v-show="!stop">
+            </i>
+            <svg @click="toggle()">
+                <circle id="ani-circle" r="260" cx="272" cy="274" 
+                :style=" stop ? 'animation-play-state: paused':''" 
+                :class="isBreak ? 'animation stroke-blue animation-duration-5'  : 'animation stroke-red animation-duration-25'"
+                >
+                </circle>
             </svg>
         </div>
     </div>
@@ -29,7 +42,8 @@
 .countdowncircleborder {
     width: 540px;
     height: 540px;
-    border: 2px solid $red;
+    border-width: 2px;
+    border-style: solid;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -39,19 +53,51 @@
 .countdowncircle {
     width: 500px;
     height: 500px;
+    border: 2px solid $red;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.background-red {
+.color-red {
+    color: $red;
+}
+
+.color-blue {
+    color: $blue;
+}
+
+.color-white {
+    color: $white;
+}
+
+.bg-red {
     background-color: $red;
 }
 
-.background-white {
+.bg-blue {
+    background-color: $blue;
+}
+
+.bg-white {
     background-color: $white;
-    border: 2px solid $red;
+}
+
+.border-color-red {
+    border-color: $red;
+}
+
+.border-color-blue {
+    border-color: $blue;
+}
+
+.stroke-red{
+    stroke: $red;
+}
+
+.stroke-blue{
+    stroke: $blue;
 }
 
 .play-background {
@@ -67,14 +113,24 @@ svg {
     transform: rotateZ(-90deg);
     width: 544px;
     height: 544px;
-    circle {
+    .animation {
         fill: none;
-        stroke: $red;
         stroke-dasharray: 1660px;
         stroke-dashoffset: 0px;
         stroke-width: 21px;
-        animation: countdown 1500s linear infinite forwards;
+        animation-name: countdown;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-direction: normal;
     }
+}
+
+.animation-duration-25 {
+    animation-duration: 10s;
+}
+
+.animation-duration-5 {
+    animation-duration: 5s;
 }
 
 .paused {
@@ -83,7 +139,6 @@ svg {
 
 .icon-style {
     font-size: 96px; 
-    color: $red;
 }
 
 @keyframes countdown {
@@ -99,7 +154,27 @@ svg {
 <script lang="ts">
 import Vue from 'vue';
 export default Vue.extend({
-    props: ['stop'],
+    props: {
+        stop : Boolean,
+        isBreak: Boolean,
+    },
+    computed: {
+        defaultColor(): string {
+            if (this.isBreak) {
+                return 'blue';
+            }
+            return 'red';
+        },
+        circleStyle(): string {
+            let bgColor = '';
+            if (this.stop) {
+                bgColor = 'bg-' + this.defaultColor;
+            } else {
+                bgColor = 'bg-white';
+            }
+            return bgColor + ' ' + 'border-color-' + this.defaultColor;
+        },
+    },
     methods: {
         toggle(): void {
             this.$emit('toggle', !this.stop);

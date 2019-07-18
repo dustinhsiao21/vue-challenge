@@ -21,13 +21,13 @@
 .todoTitle {
     font-size: 24px;
     font-family: 'Roboto', sans-serif;
-    color: $white;;
+    color: $white;
     padding: 8px 8px 8px 16px;
-    background-color: $blue;
+    background-color: $blue-dark;
 }
 
 .container {
-    background-color: $blue-dark;
+    background-color: $blue-darker;
     padding-top: 45px;
     height: 100vh;
     padding-left: 85px;

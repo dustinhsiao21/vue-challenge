@@ -58,7 +58,7 @@
 
 .link-item {
     text-decoration: none;
-    color: $blue;
+    color: $blue-dark;
 }
 
 .nav-icon {
