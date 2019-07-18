@@ -45,78 +45,91 @@
     </div>
 </el-col>
 </template>
-<style lang="sass" scoped>
-.nav-item
-    color: #FF4384
-    font-size: 40px
-    font-weight: bold
-    font-family: 'Roboto', sans-serif
-    margin-bottom: 30px
+<style lang="scss" scoped>
+@import '../../assets/scss/Pomodoro/_variables.scss';
 
+.nav-item {
+    color: $red;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    margin-bottom: 30px;
+}
 
-.link-item
-    text-decoration: none
-    color: #335A83
+.link-item {
+    text-decoration: none;
+    color: $blue;
+}
 
+.nav-icon {
+    color: inherit;
+    font-size: 36px;
+    margin-right:10px;
+}
 
-.nav-icon
-    color: inherit
-    font-size: 36px
-    margin-right:10px
+.circle {
+    color: $white;
+    position: fixed;
+    background-color: $pink;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    left: 85px;
+    bottom: -175px;
+    .circle-item {
+        margin-top: 10px;
+        text-align: center;
+        .counting {
+            color: $red;
+            font-size: 64px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: bold;
+        }
+        .counting-item {
+            color: $blue-dark;
+            font-size: 16px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: bold;
+        }
+    }
+    .start-button {
+        margin-top: -60px;
+        margin-left: 116px;
+        width: 116px;
+        height: 116px;
+        background-color: $blue-dark;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .start-icon-circle {
+            width: 104px;
+            height: 104px;
+            border: 2px solid $red;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .start-icon-background {
+                width: 96px;
+                height: 96px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: $red;
+                border-radius: 50%;
+                .start-icon {
+                    font-size: 72px;
+                    color: $white;
+                }
+            }
+        }
+    }
+}
 
-.circle
-    color: white
-    position: fixed
-    background-color: #FFEDF7
-    width: 350px
-    height: 350px
-    left: 85px
-    bottom: -175px
-    .circle-item
-        margin-top: 10px
-        text-align: center
-        .counting
-            color: #FF4384
-            font-size: 64px
-            font-family: 'Roboto', sans-serif
-            font-weight: bold
-        .counting-item
-            color: #003164
-            font-size: 16px
-            font-family: 'Roboto', sans-serif
-            font-weight: bold
-    .start-button
-        margin-top: -60px
-        margin-left: 116px
-        width: 116px
-        height: 116px
-        background-color: #003164
-        border-radius: 50%
-        display: flex
-        justify-content: center
-        align-items: center
-        .start-icon-circle
-            width: 104px
-            height: 104px
-            border: 2px solid #FF4384
-            border-radius: 50%
-            display: flex
-            justify-content: center
-            align-items: center
-            .start-icon-background
-                width: 96px
-                height: 96px
-                display: flex
-                justify-content: center
-                align-items: center
-                background-color: #FF4384
-                border-radius: 50%
-                .start-icon
-                    font-size: 72px
-                    color: #FFFFFF
-
-.router-link-active
-    color: #FF4384
+.router-link-active {
+    color: $red;
+}
 </style>
 
 <script lang="ts">

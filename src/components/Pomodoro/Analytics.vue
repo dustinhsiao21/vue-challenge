@@ -38,35 +38,43 @@
     </el-row>
 </el-row>
 </template>
-<style lang="sass" scoped>
-.mt-10
-    margin-top: 10px
-.mt-46
-    margin-top: 46px
-.count
-    color: #FFFFFF
-    font-family: 'Roboto', sans-serif
-    font-size: 16px
-    font-weight: bold
+<style lang="scss" scoped>
+@import '../../assets/scss/Pomodoro/_variables.scss';
 
-.count-number
-    font-family: 'Roboto', sans-serif
-    font-weight: bold
-    font-size: 64px
-    color: #FF4384
+.mt-10 {
+    margin-top: 10px;
+}
+.mt-46 {
+    margin-top: 46px;
+}
+.count {
+    color: $white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
 
-.tomato
-    font-family: 'Roboto', sans-serif
-    font-weight: bold
-    font-size: 16px
-    color: #335A83
-    margin-left: 5px
+.count-number {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 64px;
+    color: $red;
+}
 
-.date-between
-    color: #FFFFFF
-    font-family: 'Roboto', sans-serif
-    font-size: 16px
-    font-weight: bold
+.tomato {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+    color: $blue;
+    margin-left: 5px;
+}
+
+.date-between {
+    color: $white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
 
 </style>
 <script lang="ts">

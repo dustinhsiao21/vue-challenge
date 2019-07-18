@@ -34,35 +34,44 @@
     </el-row>
 </el-row>
 </template>
-<style lang="sass" scoped>
-.mt-30
-    margin-top: 30px
-.py-15
-    padding-top: 15px
-    padding-bottom: 15px
+<style lang="scss" scoped>
+@import '../../assets/scss/Pomodoro/_variables.scss';
 
-.ring-name
-    color: #FFFFFF
-    font-family: 'Roboto', sans-serif
-    font-size: 16px
-    font-weight: bold
+.mt-30 {
+    margin-top: 30px;
+}
+.py-15 {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
 
-.circle
-    border: 2px solid #FFFFFF
-    width: 20px
-    height: 20px
-    display: flex
-    justify-content: center
-    align-items: center
+.ring-name {
+    color: $white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+}
 
-.red
-    border-color: #FF4384
+.circle {
+    border: 2px solid $white;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-.selected
-    width: 14px
-    height: 14px
-    background-color:#FF4384
-    border-radius: 50%
+.red {
+    border-color: $red;
+}
+
+.selected {
+    width: 14px;
+    height: 14px;
+    background-color: $red;
+    border-radius: 50%;
+}
 
 </style>
 

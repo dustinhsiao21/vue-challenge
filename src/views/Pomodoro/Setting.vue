@@ -15,19 +15,34 @@
     </el-row>
 </div>
 </template>
-<style lang="sass">
-.todoTitle
-    font-size: 24px
-    font-family: 'Roboto', sans-serif
-    color: #FFFFFF
-    padding: 8px 8px 8px 16px
-    background-color:#335A83
+<style lang="scss">
+@import '../../assets/scss/Pomodoro/_variables.scss';
 
-.container
-    background-color: #003164
-    padding-top: 45px
-    height: 100vh
-    padding-left: 85px
+.todoTitle {
+    font-size: 24px;
+    font-family: 'Roboto', sans-serif;
+    color: $white;;
+    padding: 8px 8px 8px 16px;
+    background-color: $blue;
+}
+
+.container {
+    background-color: $blue-dark;
+    padding-top: 45px;
+    height: 100vh;
+    padding-left: 85px;
+}
+
+.pomodoro {
+    font-size: 24px;
+    font-weight: bold;
+    color: $white;
+    transform: rotate(90deg);
+    position: fixed;
+    bottom: 50px;
+    right: 40px;
+}
+
 </style>
 
 <script lang="ts">

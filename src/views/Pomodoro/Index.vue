@@ -56,67 +56,80 @@
         <countdown-circle :stop="stop" @toggle="toggle"></countdown-circle>
     </el-row>
 </template>
-<style lang="sass" scoped>
-.left
-    background-color: #FFEDF7
-    height: 100vh
-    min-height: 750px
-    padding: 48px
+<style lang="scss" scoped>
+@import '../../assets/scss/Pomodoro/_variables.scss';
 
-.right
-    background-color: #003164
-    height: 100vh
-    min-height: 750px
-    padding: 48px
+.left {
+    background-color: $pink;
+    height: 100vh;
+    min-height: 750px;
+    padding: 48px;
+}
 
-.doing
-    font-weight: bold
-    font-size: 24px
-    color:#003164
+.right {
+    background-color: $blue-dark;
+    height: 100vh;
+    min-height: 750px;
+    padding: 48px;
+}
 
-.time
-    color:#FF4384
-    font-size:140px
-    font-family: 'Roboto', sans-serif
-    font-weight: bold
-    margin-bottom: 0px
+.doing {
+    font-weight: bold;
+    font-size: 24px;
+    color: $blue-dark;
+}
 
-.list
-    margin-top: 60px
-    color:#003164
+.time {
+    color:$red;
+    font-size:140px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    margin-bottom: 0px;
+}
 
-.circle
-    width:48px
-    height:48px
-    border: 2px solid #003164
-    border-radius: 50%
+.list {
+    margin-top: 60px;
+    color: $blue-dark;
+}
 
-.small-circle
-    width:24px
-    height:24px
-    border: 2px solid #003164
-    border-radius: 50%
+.circle {
+    width:48px;
+    height:48px;
+    border: 2px solid  $blue-dark;
+    border-radius: 50%;
+}
 
-.setting-row
-    margin-bottom:48px
+.small-circle {
+    width:24px;
+    height:24px;
+    border: 2px solid  $blue-dark;
+    border-radius: 50%;
+}
 
-.setting-icon
-    font-size: x-large
-    color: #FFFFFF
+.setting-row {
+    margin-bottom:48px;
+}
 
-.more
-    text-decoration: none
-    font-family: 'Roboto', sans-serif
-    color: #FF4384
+.setting-icon {
+    font-size: x-large;
+    color: $white;
+}
 
-.pomodoro
-    font-size: 24px
-    font-weight: bold
-    color: #FFFFFF
-    transform: rotate(90deg)
-    position: fixed
-    bottom: 50px
-    right: 40px
+.more {
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    color: $red;
+}
+
+.pomodoro {
+    font-size: 24px;
+    font-weight: bold;
+    color: $white;
+    transform: rotate(90deg);
+    position: fixed;
+    bottom: 50px;
+    right: 40px;
+}
 </style>
 
 <script lang="ts">

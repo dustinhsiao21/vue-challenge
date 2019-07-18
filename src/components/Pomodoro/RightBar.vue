@@ -4,10 +4,12 @@
     <p class="pomodoro">POMODORO</p>
 </div>
 </template>
-<style lang="sass" scoped>
-.exit 
-    color: #FFFFFF
-    font-size: 48px
+<style lang="scss" scoped>
+@import '../../assets/scss/Pomodoro/_variables.scss';
+.exit {
+    color: #FFFFFF;
+    font-size: 48px;
+}
 </style>
 
 <script lang="ts">

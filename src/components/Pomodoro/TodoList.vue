@@ -72,57 +72,63 @@
     </div>
 </div>
 </template>
-<style lang="sass" scoped>
-.mt-48
-    margin-top:48px
+<style lang="scss" scoped>
+@import '../../assets/scss/Pomodoro/_variables.scss';
 
-.mt-10
-    margin-top:10px
+.mt-48 {
+    margin-top: 48px;
+}
 
-.collapse
-    width: 100%
+.mt-10 {
+    margin-top: 10px;
+}
 
-.icon
-    font-size: small
+.collapse {
+    width: 100%;
+}
 
-.item
-    margin-top: 10px
+.icon {
+    font-size: small;
+}
+.item {
+    margin-top: 10px;
+}
 
-.small-circle
-    width:24px
-    height:24px
-    border: 2px solid #FFFFFF
-    border-radius: 50%
-
-.text-white
-    color: #FFFFFF
-    font-size: 16px
-
-.icon-white
-    color: #FFFFFF
-    font-size: 24px
-
-.empty
-    color: #FFFFFF
-
-.line-through
-    text-decoration: line-through
-
-.italic
-    font-style: italic
-
-.check-icon
-    color: #FFFFFF
-    font-size: 32px
-
-.tomato
-    background-color: #FFFFFF
-    width: 12px
-    height: 12px
-    border-radius: 50%
-    margin-left: 5px
-    margin-right: 5px
-
+.small-circle {
+    width:24px;
+    height:24px;
+    border: 2px solid $white;
+    border-radius: 50%;
+}
+.text-white {
+    color: $white;
+    font-size: 16px;
+}
+.icon-white {
+    color: $white;
+    font-size: 24px;
+}
+.empty {
+    color: $white;
+}
+.line-through {
+    text-decoration: line-through;
+}
+.italic {
+    font-style: italic;
+}
+.check-icon {
+    color: $white;
+    font-size: 32px;
+}
+.tomato {
+    background-color: $white;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
 </style>
 
 <script lang="ts">
