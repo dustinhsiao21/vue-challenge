@@ -13,78 +13,66 @@
     </div>
 </div>
 </template>
-<style lang="scss" scoped>
-.circle-location {
-    position: absolute;
-    width: 600px;
-    left: 660px;
-    top:100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+<style lang="sass" scoped>
+.circle-location
+    position: absolute
+    width: 600px
+    left: 660px
+    top:100px
+    display: flex
+    justify-content: center
+    align-items: center
 
-.countdowncircleborder{
-    width: 540px;
-    height: 540px;
-    border: 2px solid #FF4384;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+.countdowncircleborde
+    width: 540px
+    height: 540px
+    border: 2px solid #FF4384
+    border-radius: 50%
+    display: flex
+    justify-content: center
+    align-items: center
     
-.countdowncircle{
-    width: 500px;
-    height: 500px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+.countdowncircl
+    width: 500px
+    height: 500px
+    border-radius: 50%
+    display: flex
+    justify-content: center
+    align-items: center
 
-.background-red {
-    background-color: #FF4384;
-}
+.background-red
+    background-color: #FF4384
 
-.background-white {
-    background-color: #FFFFFF;
-    border: 2px solid #FF4384;
-}
-.play-background {
-    width: 96px;
-    height: 96px;
-    border-radius: 50%;
-}
+.background-white
+    background-color: #FFFFFF
+    border: 2px solid #FF4384
+.play-background
+    width: 96px
+    height: 96px
+    border-radius: 50%
 
-svg {
-    position: absolute;
-    top: 0px;
-    right: 30px;
-    transform: rotateZ(-90deg);
-    width: 544px;
-    height: 544px;
-}
-svg circle {
-    fill: none;
-    stroke:#FF4384;
-    stroke-dasharray: 1660px;
-    stroke-dashoffset: 0px;
-    stroke-width: 21px;
-    animation: countdown 1500s linear infinite forwards;
-}
-.paused {
-    animation-play-state: paused;
-}
+svg
+    position: absolute
+    top: 0px
+    right: 30px
+    transform: rotateZ(-90deg)
+    width: 544px
+    height: 544px
+svg circle
+    fill: none
+    stroke:#FF4384
+    stroke-dasharray: 1660px
+    stroke-dashoffset: 0px
+    stroke-width: 21px
+    animation: countdown 1500s linear infinite forwards
+.paused
+    animation-play-state: paused
 
-@keyframes countdown {
-    from {
-        stroke-dashoffset: 1660px;
-    }
-    to {
-        stroke-dashoffset: 0px;
-    }
-}
+@keyframes countdown
+    from
+        stroke-dashoffset: 1660px
+    to
+        stroke-dashoffset: 0px
 </style>
 
 <script lang="ts">

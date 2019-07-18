@@ -3,7 +3,10 @@ import { Bar } from 'vue-chartjs';
 
 export default {
     extends: Bar,
-    props: ['chartdata', 'options'],
+    props: {
+        chartdata : Object,
+        option: Object,
+    },
     mounted() {
         this.renderChart(this.chartdata, this.options);
     },

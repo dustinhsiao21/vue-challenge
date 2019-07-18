@@ -72,69 +72,56 @@
     </div>
 </div>
 </template>
-<style lang="scss" scoped>
-.mt-48 {
-    margin-top:48px;
-}
+<style lang="sass" scoped>
+.mt-48
+    margin-top:48px
 
-.mt-10 {
-    margin-top:10px;
-}
+.mt-10
+    margin-top:10px
 
-.collapse {
-    width: 100%;
-}
+.collapse
+    width: 100%
 
-.icon {
-    font-size: small;
-}
+.icon
+    font-size: small
 
-.item {
-    margin-top: 10px;
-}
+.item
+    margin-top: 10px
 
-.small-circle {
-    width:24px;
-    height:24px;
-    border: 2px solid #FFFFFF;
-    border-radius: 50%;
-}
+.small-circle
+    width:24px
+    height:24px
+    border: 2px solid #FFFFFF
+    border-radius: 50%
 
-.text-white {
-    color: #FFFFFF;
-    font-size: 16px;
-}
+.text-white
+    color: #FFFFFF
+    font-size: 16px
 
-.icon-white {
-    color: #FFFFFF;
-    font-size: 24px;
-}
+.icon-white
+    color: #FFFFFF
+    font-size: 24px
 
-.empty {
-    color: #FFFFFF;
-}
+.empty
+    color: #FFFFFF
 
-.line-through {
-    text-decoration: line-through;
-}
+.line-through
+    text-decoration: line-through
 
-.italic {
-    font-style: italic;
-}
+.italic
+    font-style: italic
 
-.check-icon {
-    color: #FFFFFF;
-    font-size: 32px;
-}
+.check-icon
+    color: #FFFFFF
+    font-size: 32px
 
-.tomato {
-    background-color: #FFFFFF;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    margin-left: 5px;
-    margin-right: 5px;
-}
+.tomato
+    background-color: #FFFFFF
+    width: 12px
+    height: 12px
+    border-radius: 50%
+    margin-left: 5px
+    margin-right: 5px
 
 </style>
 
