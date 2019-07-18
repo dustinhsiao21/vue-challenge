@@ -16,11 +16,8 @@
             v-show="!stop">
             </i>
             <svg @click="toggle()">
-                <circle id="ani-circle" r="260" cx="272" cy="274" 
-                :style=" stop ? 'animation-play-state: paused':''" 
-                :class="isBreak ? 'animation stroke-blue animation-duration-5'  : 'animation stroke-red animation-duration-25'"
-                >
-                </circle>
+                <circle v-show="!isBreak" r="260" cx="272" cy="274" class="animation animation-work" :style=" stop ? 'animation-play-state: paused':''"></circle>
+                <circle v-show="isBreak" r="260" cx="272" cy="274" class="animation animation-break" :style=" stop ? 'animation-play-state: paused':''"></circle>
             </svg>
         </div>
     </div>
@@ -115,22 +112,18 @@ svg {
     height: 544px;
     .animation {
         fill: none;
-        stroke-dasharray: 1660px;
+        stroke-dasharray: 1634px;
         stroke-dashoffset: 0px;
         stroke-width: 21px;
-        animation-name: countdown;
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
-        animation-direction: normal;
     }
-}
-
-.animation-duration-25 {
-    animation-duration: 10s;
-}
-
-.animation-duration-5 {
-    animation-duration: 5s;
+    .animation-work {
+        stroke: $red;
+        animation: countdown 10s linear infinite normal;
+    }
+    .animation-break {
+        stroke: $blue;
+        animation: countdown 5s linear infinite normal;
+    }
 }
 
 .paused {
@@ -143,7 +136,7 @@ svg {
 
 @keyframes countdown {
     from {
-        stroke-dashoffset: 1660px;
+        stroke-dashoffset: 1634px;
     }
     to {
         stroke-dashoffset: 0px;
