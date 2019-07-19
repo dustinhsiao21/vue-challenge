@@ -9,7 +9,7 @@
                 <el-col class="count">TODAY</el-col>
             </el-row>
             <el-row>
-                <el-col><span class="count-number">20</span><span class="tomato">/TOMATO</span></el-col>
+                <el-col><span class="count-number">{{ todayTomato }}</span><span class="tomato">/TOMATO</span></el-col>
             </el-row>
         </el-col>
         <el-col :span="12">
@@ -17,7 +17,7 @@
                 <el-col class="count">WEEK</el-col>
             </el-row>
             <el-row>
-                <el-col><span class="count-number">108</span><span class="tomato">/TOMATO</span></el-col>
+                <el-col><span class="count-number">{{ weekTomatos }}</span><span class="tomato">/TOMATO</span></el-col>
             </el-row>
         </el-col>
     </el-row>
@@ -25,14 +25,14 @@
         <el-col :span="12">CHART</el-col>
         <el-col :span="12" class="date-between">
             <i class="el-icon-arrow-left"></i>
-                2019.7.1 - 2019.7.7
+                {{ startDate }} - {{ endDate }}
             <i class="el-icon-arrow-right"></i>
         </el-col>
     </el-row>
     <el-row>
         <el-col>
             <div class="mt-10 h-50">
-                <bar-chart :chartdata="input" :options="options" :styles="style"></bar-chart>
+                <bar-chart :input="input" :options="options" :styles="style"></bar-chart>
             </div>
         </el-col>
     </el-row>
@@ -84,22 +84,28 @@
 </style>
 <script lang="ts">
 import BarChart from './Chart/chart.vue';
+import moment from 'moment';
 import Vue from 'vue';
 
 export default Vue.extend({
     components: {
         BarChart,
     },
+    mounted() {
+        const fromDate = moment().startOf('week');
+        const endDate = moment().endOf('week');
+        while (fromDate.isSameOrBefore(endDate)) {
+            this.weekdays.push(fromDate.format('M/D'));
+            fromDate.add(1, 'days');
+        }
+        if(localStorage.done){
+            this.done = JSON.parse(localStorage.done); 
+        }
+        this.todayTomato = this.calculateDay();
+        this.tomotoEachDays = this.calculateWeek();
+    },
     data() {
         return {
-            input: {
-                labels: ['7/1', '7/2', '7/3', '7/4', '7/5', '7/6'],
-                datasets: [{
-                    label: ' ',
-                    backgroundColor	: '#FFFFFF',
-                    data: [6, 4, 5, 5, 9, 7],
-                }],
-            },
             options: {
                 legend: {
                     display: false,
@@ -133,8 +139,54 @@ export default Vue.extend({
                 height: '250px',
                 position: 'relative',
             },
+            weekdays: [] as string[],
+            done: {} as { [index:string] : [ { [index:string] : number} ]},
+            todayTomato: 0 as number,
+            tomotoEachDays: [] as number[],
         };
     },
+    computed: {
+        input(): object {
+            return {
+                labels: JSON.parse(JSON.stringify(this.weekdays)),
+                datasets: [{
+                    label: ' ',
+                    backgroundColor	: '#FFFFFF',
+                    data: JSON.parse(JSON.stringify(this.tomotoEachDays)),
+                }],
+            };
+        },
+        startDate(): string | undefined {
+            return this.weekdays[0];
+        },
+        endDate(): string | undefined {
+            return this.weekdays[6];
+        },
+        weekTomatos(): number{
+            return this.tomotoEachDays.reduce((sum, num) => {
+                return sum += num;
+            }, 0);
+        }
+    },
+    methods: {
+        calculateDay(day = moment().format('M/D')): number{
+            let sum = 0;
+            if(day in this.done){
+                this.done[day].forEach(element => {
+                    sum += element[Object.keys(element)[0]];
+                });
+            }
+            return sum;
+        },
+        calculateWeek(): number[] {
+            let week = [] as number[];
+            this.weekdays.forEach(date => {
+                week.push(this.calculateDay(date));
+            });
+
+            return week;
+        }
+    }
 });
 </script>
 

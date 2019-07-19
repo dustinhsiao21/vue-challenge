@@ -175,6 +175,7 @@ div {
 import Vue from 'vue';
 import CountdownCircle from '../../components/Pomodoro/CountdownCircle.vue';
 import InputTask from '../../components/Pomodoro/InputTask.vue';
+import moment from 'moment';
 
 export default Vue.extend({
     name: 'Pomodora',
@@ -182,7 +183,6 @@ export default Vue.extend({
     data() {
         return {
             tasks: [] as string[],
-            done: [] as Array<{}>,
             stop: true as boolean,
             time: 10 as number,
             isBreak: false as boolean,
@@ -191,9 +191,18 @@ export default Vue.extend({
         };
     },
     mounted() {
+        if(!localStorage.done){
+            localStorage.setItem('done', '{}');    
+        }
+
+        if(!localStorage.tasks){
+            localStorage.setItem('done', '[]');    
+        }
+
         if (localStorage.tasks) {
             this.tasks = JSON.parse(localStorage.tasks);
         }
+    
     },
     computed: {
         lineUpTasks(): [] {
@@ -224,8 +233,8 @@ export default Vue.extend({
             localStorage.setItem('tasks', JSON.stringify(this.tasks));
         },
         itemDone(): void {
-            this.done.push({ [this.firstTodo]: this.tomatos});
-            localStorage.setItem('done', JSON.stringify(this.done));
+            let done = { [this.firstTodo]: this.tomatos};
+            this.saveDone(done);
             this.tasks = this.lineUpTasks;
             localStorage.setItem('tasks', JSON.stringify(this.tasks));
             this.tomatos = 0;
@@ -268,6 +277,15 @@ export default Vue.extend({
             }
             return '0' + num.toString();
         },
+        saveDone(doneItem: object) {
+            let done = JSON.parse(localStorage.done);
+            let today = moment().format('M/D');
+            if(!(today in done)){
+                done[today] = [];
+            }
+            done[today].push(doneItem);
+            localStorage.setItem('done', JSON.stringify(done));
+        }
     },
 });
 </script>

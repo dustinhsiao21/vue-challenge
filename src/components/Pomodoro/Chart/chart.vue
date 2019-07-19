@@ -4,11 +4,23 @@ import { Bar } from 'vue-chartjs';
 export default {
     extends: Bar,
     props: {
-        chartdata : Object,
+        input : Object,
         options: Object,
     },
-    mounted() {
-        this.renderChart(this.chartdata, this.options);
+    computed: {
+        chartData(){
+            return this.input;
+        }
+    },
+    watch: {
+        input(){
+            this.renderBarChart();
+        }
+    },
+    methods: {
+        renderBarChart(){
+            this.renderChart(this.chartData, this.options);
+        }
     },
 };
 </script>

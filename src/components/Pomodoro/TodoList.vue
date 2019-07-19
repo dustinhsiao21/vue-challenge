@@ -54,23 +54,25 @@
             </el-row>
         </div>
         <el-row v-show="showDone">
-            <div v-show="done.length > 0" v-for="(item, index) in done" :key="index" class="item">
-                <div v-show="item != ''">
-                    <el-row type="flex" align="middle">
-                        <el-col :span="2">
-                            <i class="el-icon-circle-check check-icon"></i>
-                        </el-col>
-                        <el-col :span="10" v-text="Object.keys(item)[0]" class="text-white line-through italic"></el-col>
-                        <el-col :span="12">
-                            <el-row type="flex" justify="end">
-                                <div v-for="(count, index) in item[Object.keys(item)[0]]" :key="index" class="tomato"></div>
-                            </el-row>
-                        </el-col>
-                    </el-row>
-                    <hr>
+            <div v-show="done !=='{}'" v-for="(items, date) in done" :key="date" class="item">
+                <div v-for="(name, tomatos) in items" :key="tomatos" class="item">
+                    <div v-show="name != ''">
+                        <el-row type="flex" align="middle">
+                            <el-col :span="2">
+                                <i class="el-icon-circle-check check-icon"></i>
+                            </el-col>
+                            <el-col :span="10" v-text="Object.keys(name)[0]" class="text-white line-through italic"></el-col>
+                            <el-col :span="12">
+                                <el-row type="flex" justify="end">
+                                    <div v-for="(count, index) in name[Object.keys(name)[0]]" :key="index" class="tomato"></div>
+                                </el-row>
+                            </el-col>
+                        </el-row>
+                        <hr>
+                    </div>
                 </div>
             </div>
-            <div v-show="done.length === 0" class="empty">
+            <div v-show="done === '{}'" class="empty">
                 NONE
             </div>
         </el-row>
@@ -140,6 +142,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import InputTask from '../Pomodoro/InputTask.vue';
+import moment from 'moment';
 
 export default Vue.extend({
     components : {InputTask},
@@ -148,7 +151,7 @@ export default Vue.extend({
             showTodo: true,
             showDone: true,
             tasks: [] as string[],
-            done: [] as Array<{}>,
+            done: {} as Array<{}>,
             isBreak: false as boolean, // need to get from vuex
         };
     },
@@ -174,10 +177,20 @@ export default Vue.extend({
         },
         finished(index: number, tomato: number = 1): void {
             const removed = this.tasks.splice(index, 1).toString();
-            this.done.push({ [removed]: tomato});
-            localStorage.setItem('done', JSON.stringify(this.done));
+            let doneItem = { [removed]: tomato};
+            this.done = this.saveDone(doneItem);
             localStorage.setItem('tasks', JSON.stringify(this.tasks));
         },
+        saveDone(doneItem: object) {
+            let done = JSON.parse(localStorage.done);
+            let today = moment().format('M/D');
+            if(!(today in done)){
+                done[today] = [];
+            }
+            done[today].push(doneItem);
+            localStorage.setItem('done', JSON.stringify(done));
+            return done;
+        }
     },
 });
 </script>
