@@ -129,6 +129,7 @@ export default Vue.extend({
                         ticks: {
                             fontColor: '#FFFFFF',
                             beginAtZero: true,
+                            stepSize: 1,
                         },
                     }],
                 },
