@@ -1,7 +1,9 @@
 <template>
 <div>
-    <el-row>
-        <el-input placeholder="ADD A NEW MISSION..." v-model="input" suffix-icon="el-icon-plus" @change="add"></el-input>
+    <el-row flex="type" justify="center">
+        <el-col :span="23">
+            <input-task :isBreak="isBreak" @addTask="addTask"></input-task>
+        </el-col>
     </el-row>
     <div>
         <div @click="toggleTodo()">
@@ -31,6 +33,9 @@
                     </el-col>
                 </el-row>
                 <hr>
+            </div>
+            <div v-show="tasks.length == 0" class="empty">
+                NOTHING TO DO NOW
             </div>
         </el-row>
     </div>
@@ -65,7 +70,7 @@
                     <hr>
                 </div>
             </div>
-            <div v-show="done.length == 0" class="empty">
+            <div v-show="done.length === 0" class="empty">
                 NONE
             </div>
         </el-row>
@@ -110,6 +115,7 @@
 }
 .empty {
     color: $white;
+    margin: 10px;
 }
 .line-through {
     text-decoration: line-through;
@@ -133,23 +139,30 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import InputTask from '../Pomodoro/InputTask.vue';
+
 export default Vue.extend({
+    components : {InputTask},
     data() {
         return {
             showTodo: true,
-            showDone: false,
+            showDone: true,
             tasks: [] as string[],
             done: [] as Array<{}>,
-            input: '',
+            isBreak: false as boolean, // need to get from vuex
         };
     },
     mounted() {
         if (localStorage.tasks) {
             this.tasks = JSON.parse(localStorage.tasks);
         }
+
+        if (localStorage.done) {
+            this.done = JSON.parse(localStorage.done);
+        }
     },
     methods: {
-        add(val: string): void {
+        addTask(val: string): void {
             this.tasks.push(val);
             localStorage.setItem('tasks', JSON.stringify(this.tasks));
         },
@@ -162,6 +175,8 @@ export default Vue.extend({
         finished(index: number, tomato: number = 1): void {
             const removed = this.tasks.splice(index, 1).toString();
             this.done.push({ [removed]: tomato});
+            localStorage.setItem('done', JSON.stringify(this.done));
+            localStorage.setItem('tasks', JSON.stringify(this.tasks));
         },
     },
 });

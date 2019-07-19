@@ -2,13 +2,24 @@
     <el-row>
         <el-col :span="16" class="left" :class="isBreak ? 'bg-blue' : 'bg-pink'">
             <el-col :span="13" :offset="3">
-                <el-input placeholder="ADD A NEW MISSION..." maxlength="445" v-model="input" suffix-icon="el-icon-plus" @change="add"></el-input>
-                <el-row class="mt-145" type="flex" align="middle">
+                <input-task :isBreak="isBreak" @addTask="addTask"></input-task>
+                <el-row v-show="tasks.length > 0" class="mt-145" type="flex" align="middle">
                     <el-col :span="3">
-                        <div class="first-item-circle"></div>
+                        <div class="first-item-circle" @click="itemDone()"></div>
                     </el-col>
-                    <el-col :span="21" class="doing" v-text="firstTodo"></el-col>
+                    <el-row>
+                        <el-row>
+                            <el-col class="doing" v-text="firstTodo"></el-col>
+                        </el-row>
+                        <el-col>
+                            <el-col v-for="(tomato, key) in tomatos" :key="key" class="tomato"></el-col>
+                        </el-col>
+                    </el-row>
                 </el-row>
+                <el-row v-show="tasks.length == 0" class="mt-145" >
+                    <el-col class="doing">YOU NEED TO ADD SOMEYTHING TO START THE CLOCK</el-col>
+                </el-row>
+                
                 <div class="time" :class="isBreak ? 'color-blue' : 'color-red'">{{ min }}:{{ second }}</div>
                 <div class="list">
                     <div v-for="(task, index) in lineUpTasks" :key="index">
@@ -140,6 +151,15 @@ div {
     text-decoration: none;
 }
 
+.tomato {
+    background-color: $blue-darker;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 .pomodoro {
     font-size: 24px;
     font-weight: bold;
@@ -154,18 +174,20 @@ div {
 <script lang="ts">
 import Vue from 'vue';
 import CountdownCircle from '../../components/Pomodoro/CountdownCircle.vue';
+import InputTask from '../../components/Pomodoro/InputTask.vue';
 
 export default Vue.extend({
     name: 'Pomodora',
-    components: {CountdownCircle},
+    components: {CountdownCircle, InputTask},
     data() {
         return {
-            input: '' as string,
-            tasks: [''] as [string],
+            tasks: [] as string[],
+            done: [] as Array<{}>,
             stop: true as boolean,
             time: 10 as number,
             isBreak: false as boolean,
             interval: 0 as number,
+            tomatos: 0 as number,
         };
     },
     mounted() {
@@ -174,16 +196,18 @@ export default Vue.extend({
         }
     },
     computed: {
-        lineUpTasks(): [] | undefined {
+        lineUpTasks(): [] {
             if (this.tasks.length > 0) {
                 const originalTasks = JSON.parse(JSON.stringify(this.tasks));
                 return originalTasks.slice(1, 4);
             }
+            return [];
         },
-        firstTodo(): string | undefined {
+        firstTodo(): string {
             if (this.tasks.length > 0) {
                 return (JSON.parse(JSON.stringify(this.tasks))).shift();
             }
+            return '';
         },
         min(): string {
             const min = Math.floor((this.time * 1000) / (1000 * 60));
@@ -195,11 +219,21 @@ export default Vue.extend({
         },
     },
     methods: {
-        add(val: string): void {
-            this.tasks.push(val);
+        addTask(input: string): void {
+            this.tasks.push(input);
             localStorage.setItem('tasks', JSON.stringify(this.tasks));
         },
+        itemDone(): void {
+            this.done.push({ [this.firstTodo]: this.tomatos});
+            localStorage.setItem('done', JSON.stringify(this.done));
+            this.tasks = this.lineUpTasks;
+            localStorage.setItem('tasks', JSON.stringify(this.tasks));
+            this.tomatos = 0;
+        },
         toggle(stop: boolean): void {
+            if (this.tasks.length === 0) {
+                return;
+            }
             this.stop = stop;
             if (this.stop === false) {
                 this.interval = this.countDown();
@@ -221,6 +255,7 @@ export default Vue.extend({
         changeInterval() {
             this.isBreak = !this.isBreak;
             if (this.isBreak) {
+                this.tomatos++;
                 this.time = 5;
             }
             if (!this.isBreak) {
