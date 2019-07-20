@@ -40,10 +40,11 @@ export default Vue.extend({
     },
     methods: {
         addTask() {
-            if (this.input === 'ADD A NEW MISSION...') {
+            if (this.input === 'ADD A NEW MISSION...' || this.input === '') {
                 return;
             }
             this.$emit('addTask', this.input);
+            this.input = '';
         },
     },
 });

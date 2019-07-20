@@ -177,20 +177,20 @@ export default Vue.extend({
         },
         finished(index: number, tomato: number = 1): void {
             const removed = this.tasks.splice(index, 1).toString();
-            let doneItem = { [removed]: tomato};
+            const doneItem = { [removed]: tomato};
             this.done = this.saveDone(doneItem);
             localStorage.setItem('tasks', JSON.stringify(this.tasks));
         },
         saveDone(doneItem: object) {
-            let done = JSON.parse(localStorage.done);
-            let today = moment().format('M/D');
-            if(!(today in done)){
+            const done = JSON.parse(localStorage.done);
+            const today = moment().format('M/D');
+            if (!(today in done)) {
                 done[today] = [];
             }
             done[today].push(doneItem);
             localStorage.setItem('done', JSON.stringify(done));
             return done;
-        }
+        },
     },
 });
 </script>

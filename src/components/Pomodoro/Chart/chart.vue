@@ -8,19 +8,19 @@ export default {
         options: Object,
     },
     computed: {
-        chartData(){
+        chartData() {
             return this.input;
-        }
+        },
     },
     watch: {
-        input(){
+        input() {
             this.renderBarChart();
-        }
+        },
     },
     methods: {
-        renderBarChart(){
+        renderBarChart() {
             this.renderChart(this.chartData, this.options);
-        }
+        },
     },
 };
 </script>

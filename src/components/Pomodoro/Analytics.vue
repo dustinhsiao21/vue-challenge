@@ -98,8 +98,8 @@ export default Vue.extend({
             this.weekdays.push(fromDate.format('M/D'));
             fromDate.add(1, 'days');
         }
-        if(localStorage.done){
-            this.done = JSON.parse(localStorage.done); 
+        if (localStorage.done) {
+            this.done = JSON.parse(localStorage.done);
         }
         this.todayTomato = this.calculateDay();
         this.tomotoEachDays = this.calculateWeek();
@@ -141,7 +141,7 @@ export default Vue.extend({
                 position: 'relative',
             },
             weekdays: [] as string[],
-            done: {} as { [index:string] : [ { [index:string] : number} ]},
+            done: {} as { [index: string]: [ { [index: string]: number} ]},
             todayTomato: 0 as number,
             tomotoEachDays: [] as number[],
         };
@@ -163,31 +163,31 @@ export default Vue.extend({
         endDate(): string | undefined {
             return this.weekdays[6];
         },
-        weekTomatos(): number{
+        weekTomatos(): number {
             return this.tomotoEachDays.reduce((sum, num) => {
                 return sum += num;
             }, 0);
-        }
+        },
     },
     methods: {
-        calculateDay(day = moment().format('M/D')): number{
+        calculateDay(day = moment().format('M/D')): number {
             let sum = 0;
-            if(day in this.done){
-                this.done[day].forEach(element => {
+            if (day in this.done) {
+                this.done[day].forEach((element) => {
                     sum += element[Object.keys(element)[0]];
                 });
             }
             return sum;
         },
         calculateWeek(): number[] {
-            let week = [] as number[];
-            this.weekdays.forEach(date => {
+            const week = [] as number[];
+            this.weekdays.forEach((date) => {
                 week.push(this.calculateDay(date));
             });
 
             return week;
-        }
-    }
+        },
+    },
 });
 </script>
 

@@ -108,8 +108,8 @@ export default Vue.extend({
                 'WARNING',
                 'WHISTLE',
             ],
-            workRingSelected: 'DEFAULT',
-            breakRingSelected: 'ALERT',
+            workRingSelected: 'ALARM',
+            breakRingSelected: 'ALARM',
         };
     },
     methods: {

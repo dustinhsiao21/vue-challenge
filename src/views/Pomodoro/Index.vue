@@ -191,18 +191,17 @@ export default Vue.extend({
         };
     },
     mounted() {
-        if(!localStorage.done){
-            localStorage.setItem('done', '{}');    
+        if (!localStorage.done) {
+            localStorage.setItem('done', '{}');
         }
 
-        if(!localStorage.tasks){
-            localStorage.setItem('done', '[]');    
+        if (!localStorage.tasks) {
+            localStorage.setItem('done', '[]');
         }
 
         if (localStorage.tasks) {
             this.tasks = JSON.parse(localStorage.tasks);
         }
-    
     },
     computed: {
         lineUpTasks(): [] {
@@ -233,7 +232,7 @@ export default Vue.extend({
             localStorage.setItem('tasks', JSON.stringify(this.tasks));
         },
         itemDone(): void {
-            let done = { [this.firstTodo]: this.tomatos};
+            const done = { [this.firstTodo]: this.tomatos};
             this.saveDone(done);
             this.tasks = this.lineUpTasks;
             localStorage.setItem('tasks', JSON.stringify(this.tasks));
@@ -270,6 +269,7 @@ export default Vue.extend({
             if (!this.isBreak) {
                 this.time = 10;
             }
+            this.ring();
         },
         addZeroAndToString(num: number): string {
             if (num >= 10) {
@@ -278,14 +278,18 @@ export default Vue.extend({
             return '0' + num.toString();
         },
         saveDone(doneItem: object) {
-            let done = JSON.parse(localStorage.done);
-            let today = moment().format('M/D');
-            if(!(today in done)){
+            const done = JSON.parse(localStorage.done);
+            const today = moment().format('M/D');
+            if (!(today in done)) {
                 done[today] = [];
             }
             done[today].push(doneItem);
             localStorage.setItem('done', JSON.stringify(done));
-        }
+        },
+        ring() {
+            const audio = new Audio(require('../../assets/Alarm_Clock.mp3'));
+            audio.play();
+        },
     },
 });
 </script>
