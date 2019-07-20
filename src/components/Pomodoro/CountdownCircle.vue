@@ -118,11 +118,11 @@ svg {
     }
     .animation-work {
         stroke: $red;
-        animation: countdown 10s linear infinite normal;
+        animation: countdown 1500s linear infinite normal;
     }
     .animation-break {
         stroke: $blue;
-        animation: countdown 5s linear infinite normal;
+        animation: countdown 300s linear infinite normal;
     }
 }
 

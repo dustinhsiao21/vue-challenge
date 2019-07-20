@@ -184,7 +184,7 @@ export default Vue.extend({
         return {
             tasks: [] as string[],
             stop: true as boolean,
-            time: 10 as number,
+            time: 1500 as number,
             isBreak: false as boolean,
             interval: 0 as number,
             tomatos: 0 as number,
@@ -264,10 +264,10 @@ export default Vue.extend({
             this.isBreak = !this.isBreak;
             if (this.isBreak) {
                 this.tomatos++;
-                this.time = 5;
+                this.time = 300;
             }
             if (!this.isBreak) {
-                this.time = 10;
+                this.time = 1500;
             }
             this.ring();
         },
