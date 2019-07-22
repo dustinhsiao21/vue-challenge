@@ -1,31 +1,29 @@
 <template>
-<el-col :span="9">
-    <div>
-        <el-row class="nav-item">
-            <el-col>
-                <router-link :to="{ name:'pomo-todolist' }" class="link-item">
-                    <i id="pomo-todolist" class="el-icon-s-fold setting-icon nav-icon"></i>
-                    TO-DO LIST
-                </router-link>
-            </el-col>
-        </el-row>
-        <el-row class="nav-item">
-            <el-col>
-                <router-link :to="{ name:'pomo-analytics' }" class="link-item">
-                    <i id="pomo-analytics" class="el-icon-data-analysis setting-icon nav-icon"></i>
-                    ANALYTICS
-                </router-link>
-            </el-col>
-        </el-row>
-        <el-row class="nav-item">
-            <el-col>
-                <router-link :to="{ name:'pomo-ringtones' }" class="link-item">
-                    <i id="pomo-ringtones" class="el-icon-bell setting-icon nav-icon"></i>
-                    RINGTONES
-                </router-link>
-            </el-col>
-        </el-row>
-    </div>
+<div>
+    <el-row class="nav-item">
+        <el-col>
+            <router-link :to="{ name:'pomo-todolist' }" class="link-item">
+                <i id="pomo-todolist" class="el-icon-s-fold setting-icon nav-icon"></i>
+                TO-DO LIST
+            </router-link>
+        </el-col>
+    </el-row>
+    <el-row class="nav-item">
+        <el-col>
+            <router-link :to="{ name:'pomo-analytics' }" class="link-item">
+                <i id="pomo-analytics" class="el-icon-data-analysis setting-icon nav-icon"></i>
+                ANALYTICS
+            </router-link>
+        </el-col>
+    </el-row>
+    <el-row class="nav-item">
+        <el-col>
+            <router-link :to="{ name:'pomo-ringtones' }" class="link-item">
+                <i id="pomo-ringtones" class="el-icon-bell setting-icon nav-icon"></i>
+                RINGTONES
+            </router-link>
+        </el-col>
+    </el-row>
     <div class="circle">
         <div class="start-button">
             <div class="start-icon-circle">
@@ -43,7 +41,7 @@
             </div>
         </div>
     </div>
-</el-col>
+</div>
 </template>
 <style lang="scss" scoped>
 @import '../../assets/scss/Pomodoro/_variables.scss';
@@ -54,17 +52,18 @@
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
     margin-bottom: 30px;
-}
-
-.link-item {
-    text-decoration: none;
-    color: $blue-dark;
-}
-
-.nav-icon {
-    color: inherit;
-    font-size: 36px;
-    margin-right:10px;
+    .link-item {
+        text-decoration: none;
+        color: $blue-dark;
+        .nav-icon {
+            color: inherit;
+            font-size: 36px;
+            margin-right:10px;
+        }
+    }
+    .router-link-active {
+        color: $red;
+    }
 }
 
 .circle {
@@ -125,10 +124,6 @@
             }
         }
     }
-}
-
-.router-link-active {
-    color: $red;
 }
 </style>
 

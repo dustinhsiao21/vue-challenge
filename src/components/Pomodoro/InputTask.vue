@@ -39,7 +39,7 @@ export default Vue.extend({
         };
     },
     methods: {
-        addTask() {
+        addTask(): void {
             if (this.input === 'ADD A NEW MISSION...' || this.input === '') {
                 return;
             }

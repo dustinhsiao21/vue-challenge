@@ -143,14 +143,14 @@
 import Vue from 'vue';
 import InputTask from './InputTask.vue';
 import moment from 'moment';
-import localStorageJs from '../../assets/js/localStorage.js'
+import localStorageJs from '../../assets/js/localStorage.js';
 
 export default Vue.extend({
     components : {InputTask},
     data() {
         return {
-            showTodo: true,
-            showDone: true,
+            showTodo: true as boolean,
+            showDone: true as boolean,
             tasks: [] as string[],
             done: {} as Array<{}>,
             isBreak: false as boolean, // need to get from vuex
@@ -162,7 +162,7 @@ export default Vue.extend({
         }
 
         if (localStorageJs.get('done')) {
-            this.done = localStorage.get('done');
+            this.done = localStorageJs.get('done');
         }
     },
     methods: {
@@ -182,7 +182,7 @@ export default Vue.extend({
             this.done = this.saveDone(doneItem);
             localStorage.store('tasks', this.tasks);
         },
-        saveDone(doneItem: object) {
+        saveDone(doneItem: object): Array<{}> {
             const done = JSON.parse(localStorage.done);
             const today = moment().format('M/D');
             if (!(today in done)) {

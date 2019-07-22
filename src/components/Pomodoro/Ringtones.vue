@@ -93,7 +93,7 @@ export default Vue.extend({
                 'RING',
                 'WARNING',
                 'WHISTLE',
-            ],
+            ] as string[],
             breakRings: [
                 'NONE',
                 'DEFAULT',
@@ -107,16 +107,16 @@ export default Vue.extend({
                 'RING',
                 'WARNING',
                 'WHISTLE',
-            ],
-            workRingSelected: 'ALARM',
-            breakRingSelected: 'ALARM',
+            ] as string[],
+            workRingSelected: 'ALARM' as string,
+            breakRingSelected: 'ALARM' as string,
         };
     },
     methods: {
-        workSelected(ring: string) {
+        workSelected(ring: string): boolean {
             return ring === this.workRingSelected;
         },
-        breakSelected(ring: string) {
+        breakSelected(ring: string): boolean {
             return ring === this.breakRingSelected;
         },
     },

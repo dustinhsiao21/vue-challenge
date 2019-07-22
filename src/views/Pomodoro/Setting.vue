@@ -1,7 +1,11 @@
 <template>
 <div class="container">
     <el-row>
-        <setting-nav></setting-nav>
+        <el-col :span="9">
+            <el-row type="flex" justify="center">
+                <setting-nav></setting-nav>
+            </el-row>
+        </el-col>
         <el-col :span="10">
             <el-row type="flex" justify="center">
                 <el-col :span="17">
@@ -9,7 +13,7 @@
                 </el-col>
             </el-row>
         </el-col>
-        <el-col :span="1" :push="2">
+        <el-col :span="5" :push="3">
             <right-bar></right-bar>
         </el-col>
     </el-row>
@@ -17,10 +21,12 @@
 </template>
 <style lang="scss">
 @import '../../assets/scss/Pomodoro/_variables.scss';
+div {
+    font-family: 'Roboto', sans-serif;
+}
 
 .todoTitle {
     font-size: 24px;
-    font-family: 'Roboto', sans-serif;
     color: $white;
     padding: 8px 8px 8px 16px;
     background-color: $blue-dark;
@@ -30,7 +36,6 @@
     background-color: $blue-darker;
     padding-top: 45px;
     height: 100vh;
-    padding-left: 85px;
 }
 
 .pomodoro {
