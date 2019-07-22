@@ -83,7 +83,7 @@
 
 </style>
 <script lang="ts">
-import BarChart from './Chart/chart.vue';
+import BarChart from './Chart.vue';
 import moment from 'moment';
 import Vue from 'vue';
 

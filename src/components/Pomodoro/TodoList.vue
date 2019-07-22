@@ -141,7 +141,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import InputTask from '../Pomodoro/InputTask.vue';
+import InputTask from './InputTask.vue';
 import moment from 'moment';
 import localStorageJs from '../../assets/js/localStorage.js'
 
