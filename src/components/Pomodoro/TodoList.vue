@@ -143,6 +143,7 @@
 import Vue from 'vue';
 import InputTask from '../Pomodoro/InputTask.vue';
 import moment from 'moment';
+import localStorageJs from '../../assets/js/localStorage.js'
 
 export default Vue.extend({
     components : {InputTask},
@@ -156,18 +157,18 @@ export default Vue.extend({
         };
     },
     mounted() {
-        if (localStorage.tasks) {
-            this.tasks = JSON.parse(localStorage.tasks);
+        if (localStorageJs.get('tasks')) {
+            this.tasks = localStorageJs.get('tasks');
         }
 
-        if (localStorage.done) {
-            this.done = JSON.parse(localStorage.done);
+        if (localStorageJs.get('done')) {
+            this.done = localStorage.get('done');
         }
     },
     methods: {
         addTask(val: string): void {
             this.tasks.push(val);
-            localStorage.setItem('tasks', JSON.stringify(this.tasks));
+            localStorage.store('tasks', this.tasks);
         },
         toggleTodo(): void {
             this.showTodo = ! this.showTodo;
@@ -179,7 +180,7 @@ export default Vue.extend({
             const removed = this.tasks.splice(index, 1).toString();
             const doneItem = { [removed]: tomato};
             this.done = this.saveDone(doneItem);
-            localStorage.setItem('tasks', JSON.stringify(this.tasks));
+            localStorage.store('tasks', this.tasks);
         },
         saveDone(doneItem: object) {
             const done = JSON.parse(localStorage.done);
@@ -188,7 +189,7 @@ export default Vue.extend({
                 done[today] = [];
             }
             done[today].push(doneItem);
-            localStorage.setItem('done', JSON.stringify(done));
+            localStorage.store('done', done);
             return done;
         },
     },

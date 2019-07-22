@@ -1,8 +1,12 @@
 <template>
-    <el-row>
+    <el-row type="flex" justify="space-between">
+        <!-- left side -->
         <el-col :span="16" class="left" :class="isBreak ? 'bg-blue' : 'bg-pink'">
             <el-col :span="13" :offset="3">
+                <!-- input task -->
                 <input-task :isBreak="isBreak" @addTask="addTask"></input-task>
+                <!-- input task end -->
+                <!-- first job todo -->
                 <el-row v-show="tasks.length > 0" class="mt-145" type="flex" align="middle">
                     <el-col :span="3">
                         <div class="first-item-circle" @click="itemDone()"></div>
@@ -11,16 +15,22 @@
                         <el-row>
                             <el-col class="doing" v-text="firstTodo"></el-col>
                         </el-row>
+                        <!-- first job cost times -->
                         <el-col>
                             <el-col v-for="(tomato, key) in tomatos" :key="key" class="tomato"></el-col>
                         </el-col>
+                        <!-- first job cost times end-->
                     </el-row>
                 </el-row>
                 <el-row v-show="tasks.length == 0" class="mt-145" >
                     <el-col class="doing">YOU NEED TO ADD SOMEYTHING TO START THE CLOCK</el-col>
                 </el-row>
+                <!-- first job todo end-->
                 
+                <!-- time countdown -->
                 <div class="time" :class="isBreak ? 'color-blue' : 'color-red'">{{ min }}:{{ second }}</div>
+                <!-- time countdown end -->
+                <!-- time list -->
                 <div class="list">
                     <div v-for="(task, index) in lineUpTasks" :key="index">
                         <el-row type="flex" align="middle">
@@ -36,35 +46,41 @@
                 <el-row v-if="tasks.length > 3" type="flex" justify="end">
                     <router-link :to="{ name: 'pomo-todolist'}" class="more" :class="isBreak ? 'color-blue' : 'color-red'">MORE</router-link>
                 </el-row>
+                <!-- time list end -->
             </el-col>
         </el-col>
+        <!-- left side end -->
+        <!-- nav bar -->
         <el-col :span="8" class="right">
-            <div>
-                <el-row class="setting-row">
-                    <el-col :span="2" :offset="20">
-                        <router-link :to="{ name: 'pomo-todolist'}">
-                            <i class="el-icon-s-fold setting-icon"></i>
-                        </router-link>
-                    </el-col>
-                </el-row>
-                <el-row class="setting-row">
-                    <el-col :span="2" :offset="20">
-                        <router-link :to="{ name: 'pomo-analytics'}">
-                            <i class="el-icon-data-analysis setting-icon"></i>
-                        </router-link>
-                    </el-col>
-                </el-row>
-                <el-row class="setting-row">
-                    <el-col :span="2" :offset="20">
-                        <router-link :to="{ name: 'pomo-ringtones'}">
-                            <i class="el-icon-bell setting-icon"></i>
-                        </router-link>
-                    </el-col>
-                </el-row>
-            </div>
+            <el-row class="setting-row">
+                <el-col :span="2" :offset="20">
+                    <router-link :to="{ name: 'pomo-todolist'}">
+                        <i class="el-icon-s-fold setting-icon"></i>
+                    </router-link>
+                </el-col>
+            </el-row>
+            <el-row class="setting-row">
+                <el-col :span="2" :offset="20">
+                    <router-link :to="{ name: 'pomo-analytics'}">
+                        <i class="el-icon-data-analysis setting-icon"></i>
+                    </router-link>
+                </el-col>
+            </el-row>
+            <el-row class="setting-row">
+                <el-col :span="2" :offset="20">
+                    <router-link :to="{ name: 'pomo-ringtones'}">
+                        <i class="el-icon-bell setting-icon"></i>
+                    </router-link>
+                </el-col>
+            </el-row>
             <p class="pomodoro">POMODORO</p>
         </el-col>
-        <countdown-circle :stop="stop" @toggle="toggle" :isBreak="isBreak"></countdown-circle>
+        <!-- nav bar end-->
+        <!-- time countdown pie -->
+        <div class="circle-location">
+            <countdown-circle :stop="stop" @toggle="toggle" :isBreak="isBreak"></countdown-circle>
+        </div>
+        <!-- time countdown pie end-->
     </el-row>
 </template>
 <style lang="scss" scoped>
@@ -160,6 +176,16 @@ div {
     margin-right: 5px;
 }
 
+.circle-location {
+    position: absolute;
+    width: 600px;
+    right: 25vh;
+    top:100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .pomodoro {
     font-size: 24px;
     font-weight: bold;
@@ -176,6 +202,7 @@ import Vue from 'vue';
 import CountdownCircle from '../../components/Pomodoro/CountdownCircle.vue';
 import InputTask from '../../components/Pomodoro/InputTask.vue';
 import moment from 'moment';
+import localStorageJs from '../../assets/js/localStorage.js'
 
 export default Vue.extend({
     name: 'Pomodora',
@@ -191,17 +218,15 @@ export default Vue.extend({
         };
     },
     mounted() {
-        if (!localStorage.done) {
-            localStorage.setItem('done', '{}');
+        if (!localStorageJs.get('done')) {
+            localStorageJs.store('done', {});
         }
 
-        if (!localStorage.tasks) {
-            localStorage.setItem('done', '[]');
+        if (!localStorageJs.get('tasks')) {
+            localStorageJs.store('tasks', []);
         }
 
-        if (localStorage.tasks) {
-            this.tasks = JSON.parse(localStorage.tasks);
-        }
+        this.tasks = localStorageJs.get('tasks');
     },
     computed: {
         lineUpTasks(): [] {
@@ -229,13 +254,13 @@ export default Vue.extend({
     methods: {
         addTask(input: string): void {
             this.tasks.push(input);
-            localStorage.setItem('tasks', JSON.stringify(this.tasks));
+            localStorageJs.store('tasks', this.tasks);
         },
         itemDone(): void {
             const done = { [this.firstTodo]: this.tomatos};
             this.saveDone(done);
             this.tasks = this.lineUpTasks;
-            localStorage.setItem('tasks', JSON.stringify(this.tasks));
+            localStorageJs.store('tasks', this.tasks);
             this.tomatos = 0;
         },
         toggle(stop: boolean): void {
@@ -278,13 +303,13 @@ export default Vue.extend({
             return '0' + num.toString();
         },
         saveDone(doneItem: object) {
-            const done = JSON.parse(localStorage.done);
+            const done = localStorageJs.get('done');
             const today = moment().format('M/D');
             if (!(today in done)) {
                 done[today] = [];
             }
             done[today].push(doneItem);
-            localStorage.setItem('done', JSON.stringify(done));
+            localStorageJs.store('done', done);
         },
         ring() {
             const audio = new Audio(require('../../assets/Alarm_Clock.mp3'));

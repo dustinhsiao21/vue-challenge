@@ -1,40 +1,28 @@
 <template>
-<div class="circle-location">
-    <div class="countdowncircleborder" :class="isBreak ? 'border-color-blue' : 'border-color-red'">
-        <div class="countdowncircle" 
-            :class=" circleStyle"> 
-            <div 
-            class="play-background" 
-            v-show="stop" 
-            :class=" stop ? 'bg-white': 'bg-' + defaultColor"
-            >
-                <i class="el-icon-caret-right icon-style" 
-                :class="stop ? 'color-' + defaultColor : 'color-white'"></i>
-            </div>
-            <i class="el-icon-video-pause icon-style"
-            :class="stop ? 'color-white' : 'color-'+ defaultColor " 
-            v-show="!stop">
-            </i>
-            <svg @click="toggle()">
-                <circle v-show="!isBreak" r="260" cx="272" cy="274" class="animation animation-work" :style=" stop ? 'animation-play-state: paused':''"></circle>
-                <circle v-show="isBreak" r="260" cx="272" cy="274" class="animation animation-break" :style=" stop ? 'animation-play-state: paused':''"></circle>
-            </svg>
+<div class="countdowncircleborder" :class="isBreak ? 'border-color-blue' : 'border-color-red'">
+    <div class="countdowncircle" 
+        :class=" circleStyle"> 
+        <div 
+        class="play-background" 
+        v-show="stop" 
+        :class=" stop ? 'bg-white': 'bg-' + defaultColor"
+        >
+            <i class="el-icon-caret-right icon-style" 
+            :class="stop ? 'color-' + defaultColor : 'color-white'"></i>
         </div>
+        <i class="el-icon-video-pause icon-style"
+        :class="stop ? 'color-white' : 'color-'+ defaultColor " 
+        v-show="!stop">
+        </i>
+        <svg @click="toggle()">
+            <circle v-show="!isBreak" r="260" cx="272" cy="274" class="animation animation-work" :style=" stop ? 'animation-play-state: paused':''"></circle>
+            <circle v-show="isBreak" r="260" cx="272" cy="274" class="animation animation-break" :style=" stop ? 'animation-play-state: paused':''"></circle>
+        </svg>
     </div>
 </div>
 </template>
 <style lang="scss" scoped>
 @import '../../assets/scss/Pomodoro/_variables.scss';
-
-.circle-location {
-    position: absolute;
-    width: 600px;
-    left: 660px;
-    top:100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 .countdowncircleborder {
     width: 540px;
