@@ -73,6 +73,11 @@
                     </router-link>
                 </el-col>
             </el-row>
+            <el-row class="setting-row">
+                <el-col :span="2" :offset="20">
+                    <i class="el-icon-refresh setting-icon"></i>
+                </el-col>
+            </el-row>
             <p class="pomodoro">POMODORO</p>
         </el-col>
         <!-- nav bar end-->
@@ -102,10 +107,6 @@
     background-color: $pink;
 }
 
-div {
-    font-family: 'Roboto', sans-serif;
-}
-
 .mt-145 {
     margin-top: 145px;
 }
@@ -114,6 +115,48 @@ div {
     height: 100vh;
     min-height: 750px;
     padding: 48px;
+    .doing {
+        font-weight: bold;
+        font-size: 24px;
+        color: $blue-dark;
+    }
+
+    .time {
+        font-size:140px;
+        font-weight: bold;
+        margin-bottom: 0px;
+    }
+
+    .list {
+        margin-top: 60px;
+        color: $blue-dark;
+    }
+
+    .first-item-circle {
+        width:40px;
+        height:40px;
+        border: 2px solid  $blue-dark;
+        border-radius: 50%;
+    }
+
+    .lineup-item-circle {
+        width:24px;
+        height:24px;
+        border: 2px solid  $blue-dark;
+        border-radius: 50%;
+    }
+    .more {
+        text-decoration: none;
+    }
+
+    .tomato {
+        background-color: $blue-darker;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
 }
 
 .right {
@@ -121,60 +164,25 @@ div {
     height: 100vh;
     min-height: 750px;
     padding: 48px;
+    .setting-row {
+        margin-bottom:48px;
+    }
+
+    .setting-icon {
+        font-size: x-large;
+        color: $white;
+    }
+    .pomodoro {
+        font-size: 24px;
+        font-weight: bold;
+        color: $white;
+        transform: rotate(90deg);
+        position: fixed;
+        bottom: 50px;
+        right: 40px;
+    }
 }
 
-.doing {
-    font-weight: bold;
-    font-size: 24px;
-    color: $blue-dark;
-}
-
-.time {
-    font-size:140px;
-    font-weight: bold;
-    margin-bottom: 0px;
-}
-
-.list {
-    margin-top: 60px;
-    color: $blue-dark;
-}
-
-.first-item-circle {
-    width:40px;
-    height:40px;
-    border: 2px solid  $blue-dark;
-    border-radius: 50%;
-}
-
-.lineup-item-circle {
-    width:24px;
-    height:24px;
-    border: 2px solid  $blue-dark;
-    border-radius: 50%;
-}
-
-.setting-row {
-    margin-bottom:48px;
-}
-
-.setting-icon {
-    font-size: x-large;
-    color: $white;
-}
-
-.more {
-    text-decoration: none;
-}
-
-.tomato {
-    background-color: $blue-darker;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    margin-left: 5px;
-    margin-right: 5px;
-}
 
 .circle-location {
     position: absolute;
@@ -184,16 +192,6 @@ div {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.pomodoro {
-    font-size: 24px;
-    font-weight: bold;
-    color: $white;
-    transform: rotate(90deg);
-    position: fixed;
-    bottom: 50px;
-    right: 40px;
 }
 </style>
 
@@ -314,6 +312,9 @@ export default Vue.extend({
         ring(): void {
             const audio = new Audio(require('../../assets/Alarm_Clock.mp3'));
             audio.play();
+        },
+        resetTimer(){
+            location.reload();
         },
     },
 });

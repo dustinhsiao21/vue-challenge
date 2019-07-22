@@ -90,15 +90,15 @@
     margin-top: 10px;
 }
 
-.collapse {
-    width: 100%;
-}
-
 .icon {
     font-size: small;
 }
 .item {
     margin-top: 10px;
+}
+
+.line-through {
+    text-decoration: line-through;
 }
 
 .small-circle {
@@ -119,12 +119,11 @@
     color: $white;
     margin: 10px;
 }
-.line-through {
-    text-decoration: line-through;
-}
+
 .italic {
     font-style: italic;
 }
+
 .check-icon {
     color: $white;
     font-size: 32px;

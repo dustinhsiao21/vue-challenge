@@ -7,7 +7,7 @@
         <el-col :span="8" v-for="(ring, key) in workRings" :key="key">
             <el-row class="py-15" type="flex" align="middle">
                 <el-col :span="5" type="flex" justify="center" align="middle">
-                    <div class="circle" :class="workSelected(ring) ? 'red': ''">
+                    <div class="circle" :class="workSelected(ring) ? 'border-red': ''">
                         <div v-show="workSelected(ring)" class="selected">
                         </div>
                     </div>
@@ -23,7 +23,7 @@
         <el-col :span="8" v-for="(ring, key) in breakRings" :key="key">
             <el-row class="py-15" type="flex" align="middle">
                 <el-col :span="5">
-                    <div class="circle" :class="breakSelected(ring) ? 'red': ''">
+                    <div class="circle" :class="breakSelected(ring) ? 'border-red': ''">
                         <div v-show="breakSelected(ring)" class="selected">
                         </div>
                     </div>
@@ -45,13 +45,6 @@
     padding-bottom: 15px;
 }
 
-.ring-name {
-    color: $white;
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-}
-
 .circle {
     border: 2px solid $white;
     width: 20px;
@@ -60,17 +53,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    .selected {
+        width: 14px;
+        height: 14px;
+        background-color: $red;
+        border-radius: 50%;
+    }
 }
 
-.red {
+.border-red {
     border-color: $red;
 }
 
-.selected {
-    width: 14px;
-    height: 14px;
-    background-color: $red;
-    border-radius: 50%;
+
+.ring-name {
+    color: $white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 </style>
