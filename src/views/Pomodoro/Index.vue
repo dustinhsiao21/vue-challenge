@@ -200,7 +200,7 @@ import Vue from 'vue';
 import CountdownCircle from '../../components/Pomodoro/CountdownCircle.vue';
 import InputTask from '../../components/Pomodoro/InputTask.vue';
 import moment from 'moment';
-import localStorageJs from '../../assets/js/localStorage.js';
+import localStorageJs from '@/assets/js/localStorage';
 
 export default Vue.extend({
     name: 'Pomodora',
@@ -313,7 +313,7 @@ export default Vue.extend({
             const audio = new Audio(require('../../assets/Alarm_Clock.mp3'));
             audio.play();
         },
-        resetTimer(){
+        resetTimer() {
             location.reload();
         },
     },

@@ -142,7 +142,7 @@
 import Vue from 'vue';
 import InputTask from './InputTask.vue';
 import moment from 'moment';
-import localStorageJs from '../../assets/js/localStorage.js';
+import localStorageJs from '@/assets/js/localStorage';
 
 export default Vue.extend({
     components : {InputTask},
