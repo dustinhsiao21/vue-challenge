@@ -1,5 +1,7 @@
 # vue-challenge
 
+[![Build Status](https://travis-ci.org/dustinhsiao21/vue-challenge.svg?branch=master)](https://travis-ci.org/dustinhsiao21/vue-challenge)
+
 All Produects are using Vue.js(Vue-cli), TypeScript, ESLint, Travis CI.
 
 ## Pomodoro
