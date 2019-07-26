@@ -1,5 +1,8 @@
 export default {
     get(name: string): any {
+        if (localStorage[name] === undefined) {
+            return null;
+        }
         return JSON.parse(localStorage[name]);
     },
 

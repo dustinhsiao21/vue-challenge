@@ -4,12 +4,12 @@
         <el-col :span="16" class="left" :class="isBreak ? 'bg-blue' : 'bg-pink'">
             <el-col :span="13" :offset="3">
                 <!-- input task -->
-                <input-task :isBreak="isBreak" @addTask="addTask"></input-task>
+                <input-task :isBreak="isBreak" @addTask="ADD_TASK"></input-task>
                 <!-- input task end -->
                 <!-- first job todo -->
                 <el-row v-show="tasks.length > 0" class="mt-145" type="flex" align="middle">
                     <el-col :span="3">
-                        <div class="first-item-circle" @click="itemDone()"></div>
+                        <div class="first-item-circle" @click="ITEM_FINISHED()"></div>
                     </el-col>
                     <el-row>
                         <el-row>
@@ -201,13 +201,13 @@ import CountdownCircle from '../../components/Pomodoro/CountdownCircle.vue';
 import InputTask from '../../components/Pomodoro/InputTask.vue';
 import moment from 'moment';
 import localStorageJs from '@/assets/js/localStorage';
+import { mapActions, mapState, mapGetters, mapMutations } from 'vuex';
 
 export default Vue.extend({
     name: 'Pomodora',
     components: {CountdownCircle, InputTask},
     data() {
         return {
-            tasks: [] as string[],
             stop: true as boolean,
             time: 1500 as number,
             isBreak: false as boolean,
@@ -216,30 +216,18 @@ export default Vue.extend({
         };
     },
     mounted() {
-        if (!localStorageJs.get('done')) {
-            localStorageJs.store('done', {});
-        }
-
-        if (!localStorageJs.get('tasks')) {
-            localStorageJs.store('tasks', []);
-        }
-
-        this.tasks = localStorageJs.get('tasks');
+        this.$store.dispatch('pomodoro/TASKS_INIT');
+        this.$store.dispatch('pomodoro/DONE_INIT');
     },
     computed: {
-        lineUpTasks(): [] {
-            if (this.tasks.length > 0) {
-                const originalTasks = JSON.parse(JSON.stringify(this.tasks));
-                return originalTasks.slice(1, 4);
-            }
-            return [];
-        },
-        firstTodo(): string {
-            if (this.tasks.length > 0) {
-                return (JSON.parse(JSON.stringify(this.tasks))).shift();
-            }
-            return '';
-        },
+        ...mapState('pomodoro', [
+            'tasks',
+            'done',
+        ]),
+        ...mapGetters('pomodoro', [
+            'lineUpTasks',
+            'firstTodo',
+        ]),
         min(): string {
             const min = Math.floor((this.time * 1000) / (1000 * 60));
             return this.addZeroAndToString(min);
@@ -250,21 +238,11 @@ export default Vue.extend({
         },
     },
     methods: {
-        addTask(input: string): void {
-            this.tasks.push(input);
-            localStorageJs.store('tasks', this.tasks);
-        },
-        itemDone(): void {
-            const done = { [this.firstTodo]: this.tomatos};
-            this.saveDone(done);
-            this.tasks = this.lineUpTasks;
-            localStorageJs.store('tasks', this.tasks);
-            this.tomatos = 0;
-        },
+        ...mapMutations('pomodoro', [
+            'ADD_TASK',
+            'ITEM_FINISHED',
+        ]),
         toggle(stop: boolean): void {
-            if (this.tasks.length === 0) {
-                return;
-            }
             this.stop = stop;
             if (this.stop === false) {
                 this.interval = this.countDown();
@@ -299,15 +277,6 @@ export default Vue.extend({
                 return num.toString();
             }
             return '0' + num.toString();
-        },
-        saveDone(doneItem: object) {
-            const done = localStorageJs.get('done');
-            const today = moment().format('M/D');
-            if (!(today in done)) {
-                done[today] = [];
-            }
-            done[today].push(doneItem);
-            localStorageJs.store('done', done);
         },
         ring(): void {
             const audio = new Audio(require('../../assets/Alarm_Clock.mp3'));

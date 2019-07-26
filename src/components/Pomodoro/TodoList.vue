@@ -2,7 +2,7 @@
 <div>
     <el-row flex="type" justify="center">
         <el-col :span="23">
-            <input-task :isBreak="isBreak" @addTask="addTask"></input-task>
+            <input-task :isBreak="isBreak" @addTask="ADD_TASK"></input-task>
         </el-col>
     </el-row>
     <div>
@@ -20,7 +20,7 @@
             </el-row>
         </div>
         <el-row v-show="showTodo">
-            <div v-for="(task, index) in tasks" :key="index" class="item" @click="finished(index)">
+            <div v-for="(task, index) in tasks" :key="index" class="item" @click="ITEM_FINISHED({[index]:1})">
                 <el-row type="flex" align="middle">
                     <el-col :span="2">
                         <div class="small-circle"></div>
@@ -143,6 +143,7 @@ import Vue from 'vue';
 import InputTask from './InputTask.vue';
 import moment from 'moment';
 import localStorageJs from '@/assets/js/localStorage';
+import { mapMutations, mapState } from 'vuex';
 
 export default Vue.extend({
     components : {InputTask},
@@ -150,46 +151,29 @@ export default Vue.extend({
         return {
             showTodo: true as boolean,
             showDone: true as boolean,
-            tasks: [] as string[],
-            done: {} as Array<{}>,
             isBreak: false as boolean, // need to get from vuex
         };
     },
+    computed: {
+        ...mapState('pomodoro', [
+            'tasks',
+            'done',
+        ]),
+    },
     mounted() {
-        if (localStorageJs.get('tasks')) {
-            this.tasks = localStorageJs.get('tasks');
-        }
-
-        if (localStorageJs.get('done')) {
-            this.done = localStorageJs.get('done');
-        }
+        this.$store.dispatch('pomodoro/TASKS_INIT');
+        this.$store.dispatch('pomodoro/DONE_INIT');
     },
     methods: {
-        addTask(val: string): void {
-            this.tasks.push(val);
-            localStorage.store('tasks', this.tasks);
-        },
+        ...mapMutations('pomodoro', [
+            'ADD_TASK',
+            'ITEM_FINISHED',
+        ]),
         toggleTodo(): void {
             this.showTodo = ! this.showTodo;
         },
         toggleDone(): void {
             this.showDone = ! this.showDone;
-        },
-        finished(index: number, tomato: number = 1): void {
-            const removed = this.tasks.splice(index, 1).toString();
-            const doneItem = { [removed]: tomato};
-            this.done = this.saveDone(doneItem);
-            localStorage.store('tasks', this.tasks);
-        },
-        saveDone(doneItem: object): Array<{}> {
-            const done = JSON.parse(localStorage.done);
-            const today = moment().format('M/D');
-            if (!(today in done)) {
-                done[today] = [];
-            }
-            done[today].push(doneItem);
-            localStorage.store('done', done);
-            return done;
         },
     },
 });
